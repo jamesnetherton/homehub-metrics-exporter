@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11.1
+
+    working_directory: /go/src/homehub-metrics-exporter
+
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 17.11.0-ce
+
+      - run:
+          command: |
+            make build
+
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "release" ]; then
+              make release
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+              docker push jamesnetherton/homehub-metrics-exporter:latest
+              docker push jamesnetherton/homehub-metrics-exporter:$(cat /go/src/homehub-metrics-exporter/version.txt)
+              docker logout
+            fi

@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 5m
+
+scrape_configs:
+
+  - job_name: 'homehub'
+    static_configs:
+      - targets:
+          - 'homehub-metrics-exporter:19092'
