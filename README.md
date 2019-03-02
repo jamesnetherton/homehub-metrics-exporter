@@ -19,6 +19,15 @@ Some of the arguments can be ommitted if the default values are acceptable.
 | hub-address    | 192.168.1.254   |
 | hub-username   | admin           |
 
+Configuration options can also be set by environment variables:
+
+```
+HUB_EXPORTER_LISTEN_ADDRESS
+HUB_ADDRESS
+HUB_USERNAME
+HUB_PASSWORD
+```
+
 With the exporter running, hit the /metrics endpoint to collect metrics from the Home Hub. Here's a breakdown of available metrics.
 
 | Metrics Name           | Description   |

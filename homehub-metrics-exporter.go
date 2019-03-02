@@ -6,6 +6,7 @@ import (
 	"homehub-metrics-exporter/pkg/exporter"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -19,10 +20,10 @@ func main() {
 		password      string
 	)
 
-	flag.StringVar(&listenAddress, "listen-address", ":19092", "Address that the metrics HTTP server will listen on")
-	flag.StringVar(&hubAddress, "hub-address", "192.168.1.254", "Address for the Home Hub router")
-	flag.StringVar(&username, "hub-username", "admin", "Username for the Home Hub router")
-	flag.StringVar(&password, "hub-password", "", "Password for the Home Hub router")
+	flag.StringVar(&listenAddress, "listen-address", envOrDefault("HUB_EXPORTER_LISTEN_ADDRESS", ":19092"), "Address that the metrics HTTP server will listen on")
+	flag.StringVar(&hubAddress, "hub-address", envOrDefault("HUB_ADDRESS", "192.168.1.254"), "Address for the Home Hub router")
+	flag.StringVar(&username, "hub-username", envOrDefault("HUB_USERNAME", "admin"), "Username for the Home Hub router")
+	flag.StringVar(&password, "hub-password", envOrDefault("HUB_PASSWORD", ""), "Password for the Home Hub router")
 	flag.Parse()
 
 	homehub := client.New("http://"+hubAddress, username, password)
@@ -49,4 +50,11 @@ func main() {
 		              `))
 	})
 	log.Fatal(http.ListenAndServe(listenAddress, nil))
+}
+
+func envOrDefault(env string, defaultValue string) string {
+	if value, present := os.LookupEnv(env); present == true {
+		return value
+	}
+	return defaultValue
 }
