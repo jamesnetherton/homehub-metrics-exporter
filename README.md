@@ -7,6 +7,8 @@ A [Prometheus](https://prometheus.io) exporter for BT Home Hub routers.
 
 ## Running
 
+Download the exporter from the [releases page](https://github.com/jamesnetherton/homehub-metrics-exporter/releases) and then run:
+
 ```
 ./homehub-metrics-exporter --listen-address=0.0.0.0:19092 --hub-address=192.168.1.254 --hub-username=admin --hub-password=secret
 ```
