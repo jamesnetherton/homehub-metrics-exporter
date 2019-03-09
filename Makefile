@@ -13,6 +13,9 @@ build:
 	rm -rf build
 	go build $(BUILDFLAGS) -o build/$(NAME) $(NAME).go
 
+test: build
+	go test -v homehub-metrics-exporter/pkg/exporter
+
 docker:
 	docker build -t jamesnetherton/homehub-metrics-exporter .
 	docker tag jamesnetherton/homehub-metrics-exporter:latest jamesnetherton/homehub-metrics-exporter:$(VERSION)

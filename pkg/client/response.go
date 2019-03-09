@@ -3,15 +3,17 @@ package client
 // Response represents a HTTP response from the Home Hub
 type Response struct {
 	Body         string
-	ResponseBody responseBody
+	ResponseBody ResponseBody
 	Error        error
 }
 
-type responseBody struct {
-	Reply *reply `json:"reply"`
+// ResponseBody represents the body response reply from the Home Hub json-req endpoint
+type ResponseBody struct {
+	Reply *Reply `json:"reply"`
 }
 
-type reply struct {
+// Reply represents a reply from the Home Hub json-req endpoint
+type Reply struct {
 	UID             int              `json:"uid"`
 	ID              int              `json:"id"`
 	ReplyError      replyError       `json:"error"`
@@ -28,15 +30,16 @@ type ResponseAction struct {
 	UID               int                `json:"uid"`
 	ID                int                `json:"id"`
 	ReplyError        replyError         `json:"error"`
-	ResponseCallbacks []responseCallback `json:"callbacks"`
+	ResponseCallbacks []ResponseCallback `json:"callbacks"`
 	ResponseEvents    []responseEvent    `json:"events"`
 }
 
-type responseCallback struct {
+// ResponseCallback represents the response details associated with a ResponseAction from the Home Hub json-req endpoint
+type ResponseCallback struct {
 	UID        int        `json:"uid"`
 	Result     result     `json:"result"`
 	XPath      string     `json:"xpath"`
-	Parameters parameters `json:"parameters"`
+	Parameters Parameters `json:"parameters"`
 }
 
 type result struct {
@@ -49,15 +52,12 @@ type responseEvent struct {
 
 // DeviceDetail represents a device that has connected to the Home Hub at some point in time
 type DeviceDetail struct {
-	UID                int    `json:"uid,omitempty"`
-	Alias              string `json:"Alias,omitempty"`
-	PhysicalAddress    string `json:"PhysAddress,omitempty"`
-	IPAddress          string `json:"IPAddress,omitempty"`
-	HostName           string `json:"HostName,omitempty"`
-	Active             bool   `json:"Active,omitempty"`
-	InterfaceType      string `json:"InterfaceType,omitempty"`
-	DetectedDeviceType string `json:"DetectedDeviceType,omitempty"`
-	UserFriendlyName   string `json:"UserFriendlyName,omitempty"`
-	UserHostName       string `json:"UserHostName,omitempty"`
-	UserDeviceType     string `json:"UserDeviceType,omitempty"`
+	UID             int    `json:"uid,omitempty"`
+	Alias           string `json:"Alias,omitempty"`
+	PhysicalAddress string `json:"PhysAddress,omitempty"`
+	IPAddress       string `json:"IPAddress,omitempty"`
+	HostName        string `json:"HostName,omitempty"`
+	Active          bool   `json:"Active,omitempty"`
+	InterfaceType   string `json:"InterfaceType,omitempty"`
+	UserHostName    string `json:"UserHostName,omitempty"`
 }

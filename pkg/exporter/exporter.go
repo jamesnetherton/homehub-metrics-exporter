@@ -16,9 +16,9 @@ type Exporter struct {
 }
 
 // New creates an instance of a Home Hub exporter
-func New(client *client.Client) *Exporter {
+func New(client client.Client) *Exporter {
 	return &Exporter{
-		client:             *client,
+		client:             client,
 		metricDescriptions: createMetricDescriptions(),
 	}
 }

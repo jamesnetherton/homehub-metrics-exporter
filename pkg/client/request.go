@@ -37,11 +37,12 @@ type action struct {
 	ID               int               `json:"id"`
 	Method           string            `json:"method"`
 	XPath            string            `json:"xpath,omitempty"`
-	Parameters       *parameters       `json:"parameters,omitempty"`
+	Parameters       *Parameters       `json:"parameters,omitempty"`
 	InterfaceOptions *interfaceOptions `json:"options,omitempty"`
 }
 
-type parameters struct {
+// Parameters represents a set of Home Hub request action parameters
+type Parameters struct {
 	ID             int             `json:"id,omitempty"`
 	Nonce          string          `json:"nonce,omitempty"`
 	Persistent     string          `json:"persistent,omitempty"`
@@ -142,7 +143,7 @@ func (req request) send() *Response {
 		return response
 	}
 
-	var responseBody = &responseBody{}
+	var responseBody = &ResponseBody{}
 
 	contentType := httpResponse.Header.Get("Content-type")
 	if strings.HasPrefix(contentType, "application/json") {
