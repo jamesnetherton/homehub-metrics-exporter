@@ -4,10 +4,11 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"homehub-metrics-exporter/pkg/client"
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/client"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/prometheus/client_golang/prometheus"

@@ -1,10 +1,11 @@
 package exporter
 
 import (
-	"homehub-metrics-exporter/pkg/client"
 	"log"
 	"reflect"
 	"strings"
+
+	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/client"
 
 	"github.com/prometheus/client_golang/prometheus"
 )

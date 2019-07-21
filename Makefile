@@ -14,7 +14,7 @@ build:
 	go build $(BUILDFLAGS) -o build/$(NAME) $(NAME).go
 
 test: build
-	go test -v homehub-metrics-exporter/pkg/exporter
+	go test -v ./pkg/exporter
 
 docker:
 	docker build -t jamesnetherton/homehub-metrics-exporter .

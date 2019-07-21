@@ -5,8 +5,9 @@
 package exporter
 
 import (
-	"homehub-metrics-exporter/pkg/client"
 	reflect "reflect"
+
+	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/client"
 
 	gomock "github.com/golang/mock/gomock"
 )

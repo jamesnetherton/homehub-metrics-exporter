@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
-	"homehub-metrics-exporter/pkg/client"
-	"homehub-metrics-exporter/pkg/exporter"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/client"
+	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/exporter"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
