@@ -4,8 +4,6 @@ jobs:
     docker:
       - image: circleci/golang:1.11.12
 
-    working_directory: /go/src/homehub-metrics-exporter
-
     steps:
       - checkout
 
