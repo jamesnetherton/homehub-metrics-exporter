@@ -47,7 +47,7 @@ With the exporter running, hit the /metrics endpoint to collect metrics from the
 You can run the exporter within a Docker container:
 
 ```
-docker run -ti --rm jamesnetherton/homehub-exporter \ 
+docker run -ti --rm jamesnetherton/homehub-metrics-exporter \ 
     --listen-address=0.0.0.0:19092 \
     --hub-address=192.168.1.254 \
     --hub-username=admin \
