@@ -91,8 +91,10 @@ func (e *Exporter) Collect(channel chan<- prometheus.Metric) {
 	}
 
 	for _, device := range devices {
-		channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceUploadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.uploaded, device.hostName, device.ipAddress, device.macAddress)
-		channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceDownloadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.downloaded, device.hostName, device.ipAddress, device.macAddress)
+		if device.bandwithStatistics != nil {
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceUploadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.uploaded, device.hostName, device.ipAddress, device.macAddress)
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceDownloadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.downloaded, device.hostName, device.ipAddress, device.macAddress)
+		}
 	}
 
 	channel <- prometheus.MustNewConstMetric(e.metricDescriptions["up"], prometheus.GaugeValue, 1)
