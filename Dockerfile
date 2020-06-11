@@ -2,6 +2,10 @@ FROM golang:alpine as compile
 
 RUN apk --no-cache add make git
 
+# Download go modules before copying in the source code, to improve caching
+COPY go.* src/homehub-metrics-exporter/
+RUN cd src/homehub-metrics-exporter && go mod download
+
 COPY . src/homehub-metrics-exporter
 
 ENV CGO_ENABLED=0
