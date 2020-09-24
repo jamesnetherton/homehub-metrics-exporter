@@ -41,6 +41,8 @@ With the exporter running, hit the /metrics endpoint to collect metrics from the
 | bt_homehub_upload_rate_mbps | The upload rate of the Home Hub router |
 | bt_homehub_up | Whether the Home Hub is 'Up'. Will be 0 if the exporter failed to collect metrics. |
 | bt_homehub_uptime_seconds | The amount of time in seconds that the Home Hub has been running. |
+| bt_homehub_download_bytes_total | Total number of bytes downloaded from the internet. |
+| bt_homehub_upload_bytes_total | Total number of bytes uploaded to the internet. |
 
 ## Docker image
 
