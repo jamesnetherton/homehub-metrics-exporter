@@ -24,7 +24,7 @@ func main() {
 	flag.StringVar(&listenAddress, "listen-address", envOrDefault("HUB_EXPORTER_LISTEN_ADDRESS", ":19092"), "Address that the metrics HTTP server will listen on")
 	flag.StringVar(&hubAddress, "hub-address", envOrDefault("HUB_ADDRESS", "192.168.1.254"), "Address for the Home Hub router")
 	flag.StringVar(&username, "hub-username", envOrDefault("HUB_USERNAME", "admin"), "Username for the Home Hub router")
-	flag.StringVar(&password, "hub-password", envOrDefault("HUB_PASSWORD", ""), "Password for the Home Hub router")
+	flag.StringVar(&password, "hub-password", envOrDefault("HUB_PASSWORD", ""), "Password for the Home Hub router, either plain text or MD5 hashed")
 	flag.Parse()
 
 	homehub := client.New("http://"+hubAddress, username, password)

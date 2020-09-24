@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 	"sync/atomic"
 	"time"
 )
@@ -32,12 +33,21 @@ type HubClient struct {
 
 // New creates a new client
 func New(url string, userName string, password string) Client {
+	// MD5 hashes are 32 characters long
+	// A plain text password is maximum 20 characters long
+	if len(password) != 32 {
+		password = hexmd5(password)
+	} else {
+		// Make sure the MD5 hash is lowercase
+		password = strings.ToLower(password)
+	}
+
 	return &HubClient{
 		session: session{
 			url:          url,
 			apiURL:       url + "/" + homeHubAPIPath,
 			userName:     userName,
-			password:     hexmd5(password),
+			password:     password,
 			sessionID:    "0",
 			requestCount: 0,
 		},
