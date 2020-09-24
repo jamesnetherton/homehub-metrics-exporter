@@ -122,7 +122,7 @@ func (client *HubClient) GetSummaryStatistics() *Response {
 	}
 
 	var actions []action
-	xpaths := []string{ConnectedDevices, DownloadRate, FirmwareVersion, UploadRate, UpTime}
+	xpaths := []string{ConnectedDevices, DownloadedBytes, DownloadRate, FirmwareVersion, UploadedBytes, UploadRate, UpTime}
 
 	for i, xpath := range xpaths {
 		method := "getValue"

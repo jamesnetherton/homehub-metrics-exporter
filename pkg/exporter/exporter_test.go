@@ -50,8 +50,10 @@ func TestMetricsScrapeSuccess(t *testing.T) {
 	bt_homehub_device_uploaded_megabytes{host_name="Host Name 4",ip_address="192.168.1.4",mac_address="AA:BB:CC:DD:EE:F4"} 30
 	bt_homehub_device_uploaded_megabytes{host_name="User Host Name 5",ip_address="192.168.1.5",mac_address="AA:BB:CC:DD:EE:F5"} 10
 	bt_homehub_device_uploaded_megabytes{host_name="User Host Name 6",ip_address="192.168.1.6",mac_address="AA:BB:CC:DD:EE:F6"} 100
+	bt_homehub_download_bytes_total 654321
 	bt_homehub_download_rate_mbps 123.45
 	bt_homehub_up 1
+	bt_homehub_upload_bytes_total 123456
 	bt_homehub_upload_rate_mbps 543.21
 	bt_homehub_uptime_seconds 9.8765421e+07`
 
@@ -173,6 +175,8 @@ func createResponseActions() []client.ResponseAction {
 	responseActions = append(responseActions, newResponseAction(client.UploadRate, 543.21))
 	responseActions = append(responseActions, newResponseAction(client.UpTime, 98765421.0))
 	responseActions = append(responseActions, newResponseAction(client.ConnectedDevices, createDevices()))
+	responseActions = append(responseActions, newResponseAction(client.DownloadedBytes, "654321"))
+	responseActions = append(responseActions, newResponseAction(client.UploadedBytes, "123456"))
 	return responseActions
 }
 

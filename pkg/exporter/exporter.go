@@ -3,6 +3,7 @@ package exporter
 import (
 	"log"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/jamesnetherton/homehub-metrics-exporter/pkg/client"
@@ -55,10 +56,20 @@ func (e *Exporter) Collect(channel chan<- prometheus.Metric) {
 								devices[device.macAddress] = device
 							}
 						}
+					case client.DownloadedBytes:
+						floatValue, err := strconv.ParseFloat(value.String(), 64)
+						if err == nil {
+							channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadBytes"], prometheus.GaugeValue, floatValue)
+						}
 					case client.DownloadRate:
 						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadRateMbps"], prometheus.GaugeValue, value.Float())
 					case client.FirmwareVersion:
 						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["build"], prometheus.GaugeValue, 1, value.String())
+					case client.UploadedBytes:
+						floatValue, err := strconv.ParseFloat(value.String(), 64)
+						if err == nil {
+							channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadBytes"], prometheus.GaugeValue, floatValue)
+						}
 					case client.UploadRate:
 						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadRateMbps"], prometheus.GaugeValue, value.Float())
 					case client.UpTime:
@@ -118,5 +129,9 @@ func createMetricDescriptions() map[string]*prometheus.Desc {
 		prometheus.BuildFQName("bt", "homehub", "build_info"), "Route build information", []string{"firmware"}, nil)
 	metricDescriptions["up"] = prometheus.NewDesc(
 		prometheus.BuildFQName("bt", "homehub", "up"), "Whether the router is up", nil, nil)
+	metricDescriptions["downloadBytes"] = prometheus.NewDesc(
+		prometheus.BuildFQName("bt", "homehub", "download_bytes_total"), "Bytes downloaded from the internet", nil, nil)
+	metricDescriptions["uploadBytes"] = prometheus.NewDesc(
+		prometheus.BuildFQName("bt", "homehub", "upload_bytes_total"), "Bytes uploaded to the internet", nil, nil)
 	return metricDescriptions
 }
