@@ -30,6 +30,8 @@ HUB_USERNAME
 HUB_PASSWORD
 ```
 
+The password can either be provided as plain text or MD5 hashed.
+
 With the exporter running, hit the /metrics endpoint to collect metrics from the Home Hub. Here's a breakdown of available metrics.
 
 | Metrics Name           | Description   |
