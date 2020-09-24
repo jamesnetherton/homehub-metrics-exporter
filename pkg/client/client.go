@@ -108,7 +108,6 @@ func (client *HubClient) GetSummaryStatistics() *Response {
 	var (
 		flags   *capabilityFlags
 		options *interfaceOptions
-		params  *Parameters
 	)
 
 	client.session.requestCount++
@@ -125,26 +124,12 @@ func (client *HubClient) GetSummaryStatistics() *Response {
 	xpaths := []string{ConnectedDevices, DownloadRate, FirmwareVersion, UploadRate, UpTime}
 
 	for i, xpath := range xpaths {
-		method := "getValue"
-		params = nil
-
-		requestOptions := options
-		if xpath == BandwidthMonitoring {
-			method = "uploadBMStatisticsFile"
-			now := time.Now()
-			params = &Parameters{
-				StartDate: "20000101",
-				EndDate:   fmt.Sprintf("%d%02d%02d", now.Year(), now.Month(), now.Day()),
-			}
-			requestOptions = nil
-		}
-
 		getValueAction := action{
 			ID:               i,
-			Method:           method,
+			Method:           "getValue",
 			XPath:            xpath,
-			InterfaceOptions: requestOptions,
-			Parameters:       params,
+			InterfaceOptions: options,
+			Parameters:       nil,
 		}
 		actions = append(actions, getValueAction)
 	}
