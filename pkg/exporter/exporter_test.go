@@ -224,7 +224,7 @@ func newResponseAction(xpath string, value interface{}) client.ResponseAction {
 
 	responseCallback := &client.ResponseCallback{
 		XPath: xpath,
-		Parameters: *&client.Parameters{
+		Parameters: client.Parameters{
 			Value: value,
 		},
 	}
