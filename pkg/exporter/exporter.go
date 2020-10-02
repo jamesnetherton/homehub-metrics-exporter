@@ -38,7 +38,7 @@ func (e *Exporter) Collect(channel chan<- prometheus.Metric) {
 	var devices = make(map[string]*device)
 
 	summaryStatistics := e.client.GetSummaryStatistics()
-	bandwidthStatistics := e.client.GetBandwithStatistics()
+	bandwidthStatistics := e.client.GetBandwidthStatistics()
 
 	if summaryStatistics.Error != nil || bandwidthStatistics.Error != nil {
 		log.Println("Error fetching metrics from Home Hub")
@@ -90,20 +90,20 @@ func (e *Exporter) Collect(channel chan<- prometheus.Metric) {
 			continue
 		}
 
-		if device.bandwithStatistics == nil {
+		if device.bandwidthStatistics == nil {
 			if device.active {
-				device.bandwithStatistics = statistics
+				device.bandwidthStatistics = statistics
 			}
 		} else {
-			device.bandwithStatistics.downloaded += statistics.downloaded
-			device.bandwithStatistics.uploaded += statistics.uploaded
+			device.bandwidthStatistics.downloaded += statistics.downloaded
+			device.bandwidthStatistics.uploaded += statistics.uploaded
 		}
 	}
 
 	for _, device := range devices {
-		if device.bandwithStatistics != nil {
-			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceUploadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.uploaded, device.hostName, device.ipAddress, device.macAddress)
-			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceDownloadedMegabytes"], prometheus.GaugeValue, device.bandwithStatistics.downloaded, device.hostName, device.ipAddress, device.macAddress)
+		if device.bandwidthStatistics != nil {
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceUploadedMegabytes"], prometheus.GaugeValue, device.bandwidthStatistics.uploaded, device.hostName, device.ipAddress, device.macAddress)
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["deviceDownloadedMegabytes"], prometheus.GaugeValue, device.bandwidthStatistics.downloaded, device.hostName, device.ipAddress, device.macAddress)
 		}
 	}
 

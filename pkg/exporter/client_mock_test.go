@@ -59,14 +59,14 @@ func (mr *MockClientMockRecorder) GetSummaryStatistics() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSummaryStatistics", reflect.TypeOf((*MockClient)(nil).GetSummaryStatistics))
 }
 
-// GetBandwithStatistics mocks base method
-func (m *MockClient) GetBandwithStatistics() *client.Response {
-	ret := m.ctrl.Call(m, "GetBandwithStatistics")
+// GetBandwidthStatistics mocks base method
+func (m *MockClient) GetBandwidthStatistics() *client.Response {
+	ret := m.ctrl.Call(m, "GetBandwidthStatistics")
 	ret0, _ := ret[0].(*client.Response)
 	return ret0
 }
 
-// GetBandwithStatistics indicates an expected call of GetBandwithStatistics
-func (mr *MockClientMockRecorder) GetBandwithStatistics() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBandwithStatistics", reflect.TypeOf((*MockClient)(nil).GetBandwithStatistics))
+// GetBandwidthStatistics indicates an expected call of GetBandwidthStatistics
+func (mr *MockClientMockRecorder) GetBandwidthStatistics() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBandwidthStatistics", reflect.TypeOf((*MockClient)(nil).GetBandwidthStatistics))
 }

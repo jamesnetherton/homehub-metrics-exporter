@@ -6,12 +6,12 @@ import (
 )
 
 type device struct {
-	macAddress         string
-	ipAddress          string
-	hostName           string
-	deviceType         string
-	active             bool
-	bandwithStatistics *deviceBandwithStatistics
+	macAddress          string
+	ipAddress           string
+	hostName            string
+	deviceType          string
+	active              bool
+	bandwidthStatistics *deviceBandwidthStatistics
 }
 
 func newDevice(deviceDetails map[string]interface{}) *device {
@@ -37,13 +37,13 @@ func newDevice(deviceDetails map[string]interface{}) *device {
 	}
 }
 
-type deviceBandwithStatistics struct {
+type deviceBandwidthStatistics struct {
 	macAddress string
 	uploaded   float64
 	downloaded float64
 }
 
-func newDeviceBandwidthStatistics(statistics string) *deviceBandwithStatistics {
+func newDeviceBandwidthStatistics(statistics string) *deviceBandwidthStatistics {
 	statistic := strings.Split(statistics, ",")
 
 	if len(statistic) >= 5 {
@@ -57,7 +57,7 @@ func newDeviceBandwidthStatistics(statistics string) *deviceBandwithStatistics {
 			uploaded = 0
 		}
 
-		return &deviceBandwithStatistics{
+		return &deviceBandwidthStatistics{
 			macAddress: strings.ToUpper(statistic[1]),
 			uploaded:   uploaded,
 			downloaded: downloaded,
