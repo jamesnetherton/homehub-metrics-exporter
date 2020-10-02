@@ -23,7 +23,7 @@ type session struct {
 type Client interface {
 	Login() *Response
 	GetSummaryStatistics() *Response
-	GetBandwithStatistics() *Response
+	GetBandwidthStatistics() *Response
 }
 
 // HubClient is an instance of client
@@ -154,9 +154,9 @@ func (client *HubClient) GetSummaryStatistics() *Response {
 	return request.send()
 }
 
-// GetBandwithStatistics returns a response containing a summary of bandwidth statistics for any devices
+// GetBandwidthStatistics returns a response containing a summary of bandwidth statistics for any devices
 // that have connected to the Home Hub
-func (client *HubClient) GetBandwithStatistics() *Response {
+func (client *HubClient) GetBandwidthStatistics() *Response {
 
 	var (
 		options *interfaceOptions

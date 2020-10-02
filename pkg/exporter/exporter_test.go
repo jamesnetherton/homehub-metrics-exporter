@@ -24,7 +24,7 @@ func TestMetricsScrapeSuccess(t *testing.T) {
 	defer prometheus.Unregister(exporter)
 
 	client.EXPECT().GetSummaryStatistics().Return(createSummaryStatisticsResponse())
-	client.EXPECT().GetBandwithStatistics().Return(createBandwidthStatisticsResponse())
+	client.EXPECT().GetBandwidthStatistics().Return(createBandwidthStatisticsResponse())
 
 	response, err := scrapeMetrics(exporter, t.Name())
 	if err != nil {
@@ -80,7 +80,7 @@ func TestMetricsScrapeFailure(t *testing.T) {
 	bandwidthStatsResponse.Error = errors.New("Scrape error")
 
 	client.EXPECT().GetSummaryStatistics().Return(bandwidthStatsResponse)
-	client.EXPECT().GetBandwithStatistics().Return(createBandwidthStatisticsResponse())
+	client.EXPECT().GetBandwidthStatistics().Return(createBandwidthStatisticsResponse())
 
 	response, err := scrapeMetrics(exporter, t.Name())
 	if err != nil {
