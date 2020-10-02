@@ -24,10 +24,10 @@ type request struct {
 }
 
 type requestBody struct {
+	Priority          bool     `json:"priority"`
 	ID                int32    `json:"id"`
 	SessionID         string   `json:"session-id"`
 	SessionExpiryTime string   `json:"-"`
-	Priority          bool     `json:"priority"`
 	Actions           []action `json:"actions"`
 	CNonce            int      `json:"cnonce"`
 	AuthKey           string   `json:"auth-key"`
@@ -94,8 +94,8 @@ type capability struct {
 }
 
 type sessionData struct {
-	ID        int32     `json:"req_id"`
 	SessionID int       `json:"sess_id"`
+	ID        int32     `json:"req_id"`
 	Basic     bool      `json:"basic"`
 	User      string    `json:"user"`
 	DataModel dataModel `json:"dataModel"`
