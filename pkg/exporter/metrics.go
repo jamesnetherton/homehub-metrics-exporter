@@ -5,14 +5,6 @@ import (
 	"strings"
 )
 
-type metrics struct {
-	dowloadRate     float64
-	firmwareVersion string
-	uploadRate      float64
-	uptime          float64
-	err             error
-}
-
 type device struct {
 	macAddress         string
 	ipAddress          string
