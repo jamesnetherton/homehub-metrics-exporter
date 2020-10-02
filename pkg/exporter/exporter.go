@@ -33,71 +33,70 @@ func (e *Exporter) Describe(channel chan<- *prometheus.Desc) {
 }
 
 // Collect function, called on by Prometheus Client library
-// This function is called when a scrape is peformed on the /metrics page
+// This function is called when a scrape is performed on the /metrics page
 func (e *Exporter) Collect(channel chan<- prometheus.Metric) {
 	var devices = make(map[string]*device)
-	var responses []*client.Response
 
-	responses = append(responses, e.client.GetSummaryStatistics())
-	responses = append(responses, e.client.GetBandwithStatistics())
+	summaryStatistics := e.client.GetSummaryStatistics()
+	bandwidthStatistics := e.client.GetBandwithStatistics()
 
-	for _, response := range responses {
-		if response.Error == nil {
-			if response.ResponseBody.Reply != nil && response.ResponseBody.Reply.ResponseActions != nil {
-				for _, action := range response.ResponseBody.Reply.ResponseActions {
-					value := reflect.ValueOf(action.ResponseCallbacks[0].Parameters.Value)
+	if summaryStatistics.Error != nil || bandwidthStatistics.Error != nil {
+		log.Println("Error fetching metrics from Home Hub")
+		channel <- prometheus.MustNewConstMetric(e.metricDescriptions["up"], prometheus.GaugeValue, 0)
+		return
+	}
 
-					switch action.ResponseCallbacks[0].XPath {
-					case client.ConnectedDevices:
-						deviceDetails := value.Interface().([]interface{})
-						for _, v := range deviceDetails {
-							device := newDevice(v.(map[string]interface{}))
-							if device.active && (device.deviceType == "WiFi" || device.deviceType == "Ethernet") {
-								devices[device.macAddress] = device
-							}
-						}
-					case client.DownloadedBytes:
-						floatValue, err := strconv.ParseFloat(value.String(), 64)
-						if err == nil {
-							channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadBytes"], prometheus.GaugeValue, floatValue)
-						}
-					case client.DownloadRate:
-						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadRateMbps"], prometheus.GaugeValue, value.Float())
-					case client.FirmwareVersion:
-						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["build"], prometheus.GaugeValue, 1, value.String())
-					case client.UploadedBytes:
-						floatValue, err := strconv.ParseFloat(value.String(), 64)
-						if err == nil {
-							channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadBytes"], prometheus.GaugeValue, floatValue)
-						}
-					case client.UploadRate:
-						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadRateMbps"], prometheus.GaugeValue, value.Float())
-					case client.UpTime:
-						channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uptime"], prometheus.GaugeValue, value.Float())
-					}
-				}
-			} else if response.Body != "" {
-				for _, line := range strings.Split(response.Body, "\n") {
-					statistics := newDeviceBandwidthStatistics(line)
-					if statistics != nil {
-						device := devices[statistics.macAddress]
-						if device != nil {
-							if device.bandwithStatistics == nil {
-								if device.active {
-									device.bandwithStatistics = statistics
-								}
-							} else {
-								device.bandwithStatistics.downloaded += statistics.downloaded
-								device.bandwithStatistics.uploaded += statistics.uploaded
-							}
-						}
-					}
+	for _, action := range summaryStatistics.ResponseBody.Reply.ResponseActions {
+		value := reflect.ValueOf(action.ResponseCallbacks[0].Parameters.Value)
+
+		switch action.ResponseCallbacks[0].XPath {
+		case client.ConnectedDevices:
+			deviceDetails := value.Interface().([]interface{})
+			for _, v := range deviceDetails {
+				device := newDevice(v.(map[string]interface{}))
+				if device.active && (device.deviceType == "WiFi" || device.deviceType == "Ethernet") {
+					devices[device.macAddress] = device
 				}
 			}
+		case client.DownloadedBytes:
+			floatValue, err := strconv.ParseFloat(value.String(), 64)
+			if err == nil {
+				channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadBytes"], prometheus.GaugeValue, floatValue)
+			}
+		case client.DownloadRate:
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["downloadRateMbps"], prometheus.GaugeValue, value.Float())
+		case client.FirmwareVersion:
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["build"], prometheus.GaugeValue, 1, value.String())
+		case client.UploadedBytes:
+			floatValue, err := strconv.ParseFloat(value.String(), 64)
+			if err == nil {
+				channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadBytes"], prometheus.GaugeValue, floatValue)
+			}
+		case client.UploadRate:
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uploadRateMbps"], prometheus.GaugeValue, value.Float())
+		case client.UpTime:
+			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["uptime"], prometheus.GaugeValue, value.Float())
+		}
+	}
+
+	for _, line := range strings.Split(bandwidthStatistics.Body, "\n") {
+		statistics := newDeviceBandwidthStatistics(line)
+		if statistics == nil {
+			continue
+		}
+
+		device := devices[statistics.macAddress]
+		if device == nil {
+			continue
+		}
+
+		if device.bandwithStatistics == nil {
+			if device.active {
+				device.bandwithStatistics = statistics
+			}
 		} else {
-			log.Println("Error fetching metrics from Home Hub")
-			channel <- prometheus.MustNewConstMetric(e.metricDescriptions["up"], prometheus.GaugeValue, 0)
-			return
+			device.bandwithStatistics.downloaded += statistics.downloaded
+			device.bandwithStatistics.uploaded += statistics.uploaded
 		}
 	}
 
