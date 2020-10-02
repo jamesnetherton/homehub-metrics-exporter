@@ -153,7 +153,7 @@ func (req request) send() *Response {
 			response.Error = errors.New(responseBody.Reply.ReplyError.Description)
 		}
 	} else {
-		response.Body = string(bodyBytes[:])
+		response.Body = string(bodyBytes)
 	}
 
 	return response
@@ -230,7 +230,7 @@ func newSessionData(session *session) *sessionData {
 
 	sessionID, _ := strconv.Atoi(session.sessionID)
 	authKey := hexmd5(fmt.Sprintf("%s:%s:%s", session.userName, session.nonce, session.password))
-	ha1 := authKey[:10] + session.password + authKey[10:len(authKey)]
+	ha1 := authKey[:10] + session.password + authKey[10:]
 
 	return &sessionData{
 		ID:        session.requestCount,

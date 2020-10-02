@@ -54,7 +54,7 @@ func main() {
 }
 
 func envOrDefault(env string, defaultValue string) string {
-	if value, present := os.LookupEnv(env); present == true {
+	if value, present := os.LookupEnv(env); present {
 		return value
 	}
 	return defaultValue
