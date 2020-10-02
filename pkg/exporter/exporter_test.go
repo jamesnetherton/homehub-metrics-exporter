@@ -35,6 +35,7 @@ func TestMetricsScrapeSuccess(t *testing.T) {
 		t.Fatalf("Error occurred scraping metrics. Got status code %d", response.StatusCode)
 	}
 
+	defer response.Body.Close()
 	scanner := bufio.NewScanner(response.Body)
 
 	expectedMetrics := `bt_homehub_build_info{firmware="ABC123"} 1
@@ -90,6 +91,7 @@ func TestMetricsScrapeFailure(t *testing.T) {
 		t.Fatalf("Error occurred scraping metrics. Got status code %d", response.StatusCode)
 	}
 
+	defer response.Body.Close()
 	scanner := bufio.NewScanner(response.Body)
 
 	expectedMetrics := `bt_homehub_build_info{firmware="ABC123"} 1
