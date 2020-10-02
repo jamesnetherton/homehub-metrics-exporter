@@ -190,16 +190,17 @@ func createDevices() []interface{} {
 		userHostName := ""
 		alias := ""
 
-		if i == 3 {
+		switch i {
+		case 3:
 			hostName = ""
 			alias = fmt.Sprintf("Alias %d", i)
-		} else if i >= 5 && i < 7 {
+		case 5, 6:
 			interfaceType = "WiFi"
 			hostName = ""
 			userHostName = fmt.Sprintf("User Host Name %d", i)
-		} else if i == 7 {
+		case 7:
 			interfaceType = "Invalid"
-		} else if i > 7 {
+		case 8, 9, 10:
 			active = false
 		}
 

@@ -20,11 +20,12 @@ func newDevice(deviceDetails map[string]interface{}) *device {
 	ipaddress := deviceDetails["IPAddress"].(string)
 	mac := deviceDetails["PhysAddress"].(string)
 	hostName := ""
-	if deviceDetails["UserHostName"] != "" {
+	switch {
+	case deviceDetails["UserHostName"] != "":
 		hostName = deviceDetails["UserHostName"].(string)
-	} else if deviceDetails["HostName"] != "" {
+	case deviceDetails["HostName"] != "":
 		hostName = deviceDetails["HostName"].(string)
-	} else {
+	default:
 		hostName = deviceDetails["Alias"].(string)
 	}
 	return &device{
