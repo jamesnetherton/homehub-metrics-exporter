@@ -130,8 +130,8 @@ func (client *HubClient) GetSummaryStatistics() *Response {
 		CapabilityFlags: *flags,
 	}
 
-	var actions []action
 	xpaths := []string{ConnectedDevices, DownloadedBytes, DownloadRate, FirmwareVersion, UploadedBytes, UploadRate, UpTime}
+	actions := make([]action, 0, len(xpaths))
 
 	for i, xpath := range xpaths {
 		getValueAction := action{
