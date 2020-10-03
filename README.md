@@ -1,6 +1,6 @@
 # Home Hub Metrics Exporter
 
-[![CircleCI](https://img.shields.io/circleci/project/github/jamesnetherton/homehub-metrics-exporter/master.svg)](https://circleci.com/gh/jamesnetherton/homehub-metrics-exporter/tree/master)
+![Build](https://github.com/jamesnetherton/homehub-metrics-exporter/workflows/Build/badge.svg?event=push)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=600)](https://opensource.org/licenses/MIT)
 
 A [Prometheus](https://prometheus.io) exporter for BT Home Hub routers.
