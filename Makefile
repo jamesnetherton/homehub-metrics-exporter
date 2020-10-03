@@ -15,6 +15,12 @@ build:
 test: build
 	go test -v ./pkg/exporter
 
+install-golangci-lint:
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b /usr/local/bin v1.24.0
+
+lint:
+	golangci-lint run $(LINT_OPTIONS) --verbose --deadline 10m ./...
+
 release-docker:
 	docker build -t jamesnetherton/homehub-metrics-exporter .
 	docker tag jamesnetherton/homehub-metrics-exporter:latest jamesnetherton/homehub-metrics-exporter:$(VERSION)

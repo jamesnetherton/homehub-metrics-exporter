@@ -26,3 +26,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: make test
+      - name: Lint
+        run: |
+          make install-golangci-lint
+          LINT_OPTIONS="--disable unused" make lint
