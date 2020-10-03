@@ -1,4 +1,3 @@
-ARCH=$(shell uname -m)
 NAME=homehub-metrics-exporter
 ROOT_PACKAGE := main
 VERSION=$(shell cat version.txt)
@@ -16,11 +15,16 @@ build:
 test: build
 	go test -v ./pkg/exporter
 
-docker:
+release-docker:
 	docker build -t jamesnetherton/homehub-metrics-exporter .
 	docker tag jamesnetherton/homehub-metrics-exporter:latest jamesnetherton/homehub-metrics-exporter:$(VERSION)
 
-release: docker
+	docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD)
+	docker push jamesnetherton/homehub-metrics-exporter:latest
+	docker push jamesnetherton/homehub-metrics-exporter:$(VERSION)
+	docker logout
+
+release:
 	rm -rf build
 	rm -rf release && mkdir release
 
@@ -30,14 +34,16 @@ release: docker
 	mkdir -p build/darwin && GOOS=darwin go build $(BUILDFLAGS) -o build/darwin/$(NAME)
 	mkdir -p build/windows && GOOS=windows go build $(BUILDFLAGS) -o build/windows/$(NAME).exe
 
-	tar -zcf release/$(NAME)-$(VERSION)-linux-$(ARCH).tar.gz -C build/linux $(NAME)
+	tar -zcf release/$(NAME)-$(VERSION)-linux-x86_64.tar.gz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)-$(VERSION)-linux-arm.tar.gz -C build/rpi32 $(NAME)
 	tar -zcf release/$(NAME)-$(VERSION)-linux-arm64.tar.gz -C build/rpi64 $(NAME)
-	tar -zcf release/$(NAME)-$(VERSION)-darwin-$(ARCH).tar.gz -C build/darwin $(NAME)
-	zip -j release/$(NAME)-$(VERSION)-windows-$(ARCH).zip build/windows/$(NAME).exe
+	tar -zcf release/$(NAME)-$(VERSION)-darwin-x86_64.tar.gz -C build/darwin $(NAME)
+	zip -j release/$(NAME)-$(VERSION)-windows-x86_64.zip build/windows/$(NAME).exe
 
-	go get -u github.com/progrium/gh-release
-	gh-release checksums sha256
-	gh-release create jamesnetherton/$(NAME) $(VERSION)
+	sha256sum release/$(NAME)-$(VERSION)-linux-x86_64.tar.gz | cut -f1 -d' ' > release/$(NAME)-$(VERSION)-linux-x86_64.tar.gz.sha256
+	sha256sum release/$(NAME)-$(VERSION)-linux-arm.tar.gz | cut -f1 -d' ' > release/$(NAME)-$(VERSION)-linux-arm.tar.gz.sha256
+	sha256sum release/$(NAME)-$(VERSION)-linux-arm64.tar.gz | cut -f1 -d' ' > release/$(NAME)-$(VERSION)-linux-arm64.tar.gz.sha256
+	sha256sum release/$(NAME)-$(VERSION)-darwin-x86_64.tar.gz | cut -f1 -d' ' > release/$(NAME)-$(VERSION)-linux-darwin.tar.gz.sha256
+	sha256sum release/$(NAME)-$(VERSION)-windows-x86_64.zip | cut -f1 -d' ' > release/$(NAME)-$(VERSION)-linux-windows.zip.sha256
 
 .PHONY: release build
