@@ -132,7 +132,7 @@ func (req request) send() *Response {
 	}
 
 	if httpResponse.StatusCode >= 400 {
-		response.Error = fmt.Errorf("Error processing request. Hub returned HTTP response code: %d", httpResponse.StatusCode)
+		response.Error = fmt.Errorf("error processing request. Hub returned HTTP response code: %d", httpResponse.StatusCode)
 		return response
 	}
 
@@ -147,7 +147,12 @@ func (req request) send() *Response {
 
 	contentType := httpResponse.Header.Get("Content-type")
 	if strings.HasPrefix(contentType, "application/json") {
-		json.Unmarshal(bodyBytes, responseBody)
+		err := json.Unmarshal(bodyBytes, responseBody)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+
 		response.ResponseBody = *responseBody
 		if responseBody.Reply != nil && responseBody.Reply.ReplyError.Description != "Ok" {
 			response.Error = errors.New(responseBody.Reply.ReplyError.Description)

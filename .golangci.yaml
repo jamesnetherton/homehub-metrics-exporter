@@ -11,6 +11,8 @@ linters:
     - gochecknoglobals
     - gocognit
     - godox
+    - gomnd
+    - gosec
     - funlen
     - whitespace
     - wsl

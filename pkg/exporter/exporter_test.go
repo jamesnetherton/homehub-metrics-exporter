@@ -119,12 +119,14 @@ func containsLine(s string, match string) bool {
 	return false
 }
 
+//nolint:golint,interfacer
 func scrapeMetrics(exporter *Exporter, name string) (*http.Response, error) {
 	prometheus.MustRegister(exporter)
 
 	http.Handle("/"+name, promhttp.Handler())
 
 	go func() {
+		//nolint:golint,errcheck
 		http.ListenAndServe(":19092", nil)
 	}()
 

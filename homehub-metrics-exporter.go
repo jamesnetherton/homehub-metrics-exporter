@@ -41,6 +41,7 @@ func main() {
 
 	http.Handle("/metrics", promhttp.Handler())
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		//nolint:golint,errcheck
 		w.Write([]byte(`<html>
 		                <head><title>Home Hub Exporter</title></head>
 		                <body>
