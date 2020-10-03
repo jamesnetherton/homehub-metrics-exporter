@@ -25,7 +25,7 @@ release-docker:
 	docker build -t jamesnetherton/homehub-metrics-exporter .
 	docker tag jamesnetherton/homehub-metrics-exporter:latest jamesnetherton/homehub-metrics-exporter:$(VERSION)
 
-	docker login -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)
+	docker login -u "$(DOCKER_USERNAME)" -p "$(DOCKER_PASSWORD)"
 	docker push jamesnetherton/homehub-metrics-exporter:latest
 	docker push jamesnetherton/homehub-metrics-exporter:$(VERSION)
 	docker logout

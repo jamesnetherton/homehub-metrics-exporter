@@ -29,14 +29,14 @@ jobs:
           LINT_OPTIONS="--disable unused" make lint
       - name: Build release binaries
         run: make release
+      - name: Release docker image
+        env:
+          DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+          DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+        run: make release-docker
       - name: GitHub release
         uses: softprops/action-gh-release@v1
         with:
           files: release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release docker image
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: make release-docker
