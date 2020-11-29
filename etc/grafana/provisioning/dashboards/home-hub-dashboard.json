@@ -15,127 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 3,
-      "fillGradient": 6,
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "hiddenSeries": false,
-      "id": 5,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.2.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(bt_homehub_download_bytes_total[5m])",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "Downloads",
-          "refId": "A"
-        },
-        {
-          "expr": "rate(bt_homehub_upload_bytes_total[5m])",
-          "interval": "",
-          "legendFormat": "Uploads",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Summary",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
     {
       "datasource": null,
       "fieldConfig": {
@@ -157,7 +38,7 @@
               }
             ]
           },
-          "unit": "Mbit/s"
+          "unit": "Mbps"
         },
         "overrides": []
       },
@@ -165,7 +46,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 7
+        "y": 0
       },
       "id": 11,
       "options": {
@@ -179,7 +60,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.2.2",
+      "pluginVersion": "7.3.4",
       "targets": [
         {
           "expr": "bt_homehub_download_rate_mbps/1024",
@@ -216,7 +97,7 @@
               }
             ]
           },
-          "unit": "days"
+          "unit": "Days"
         },
         "overrides": []
       },
@@ -224,7 +105,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 7
+        "y": 0
       },
       "id": 9,
       "options": {
@@ -241,7 +122,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "7.2.2",
+      "pluginVersion": "7.3.4",
       "targets": [
         {
           "expr": "bt_homehub_uptime_seconds/60/60/24",
@@ -252,7 +133,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
+      "title": "Uptime",
       "transformations": [
         {
           "id": "organize",
@@ -297,7 +178,7 @@
               }
             ]
           },
-          "unit": "Mbit/s"
+          "unit": "Mbps"
         },
         "overrides": []
       },
@@ -305,7 +186,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 7
+        "y": 0
       },
       "id": 12,
       "options": {
@@ -319,7 +200,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.2.2",
+      "pluginVersion": "7.3.4",
       "targets": [
         {
           "expr": "bt_homehub_upload_rate_mbps/1024",
@@ -333,6 +214,124 @@
       "title": "Upload Speed",
       "transparent": true,
       "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 3,
+      "fillGradient": 6,
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(bt_homehub_download_bytes_total[5m])",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Downloads",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(bt_homehub_upload_bytes_total[5m])",
+          "interval": "",
+          "legendFormat": "Uploads",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Bandwidth Use Summary",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "aliasColors": {},
@@ -375,7 +374,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.2",
+      "pluginVersion": "7.3.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -396,7 +395,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Download Rate",
+      "title": "Device Download Rate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -473,7 +472,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.2",
+      "pluginVersion": "7.3.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -494,7 +493,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Upload Rate",
+      "title": "Device Upload Rate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -537,15 +536,49 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "SG4B1000E020",
+          "value": "SG4B1000E020"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(bt_homehub_build_info, firmware)",
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "firmware",
+        "multi": false,
+        "name": "firmware",
+        "options": [
+          {
+            "selected": true,
+            "text": "SG4B1000E020",
+            "value": "SG4B1000E020"
+          }
+        ],
+        "query": "label_values(bt_homehub_build_info, firmware)",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "BT Home Hub Stats",
+  "title": "BT Home Hub Statistics",
   "uid": "dba8e3896e7a56b2325cc571fde93891",
-  "version": 3
+  "version": 14
 }
