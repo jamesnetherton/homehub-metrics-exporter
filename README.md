@@ -68,7 +68,7 @@ The Home Hub Grafana dashboard can be accessed at http://localhost:3000. Prometh
 
 ## Building
 
-This project uses [go modules](https://github.com/golang/go/wiki/Modules). Ensure that you're using a compattible go version in order to build the project. 
+This project uses [go modules](https://github.com/golang/go/wiki/Modules). Ensure that you're using a compatible go version in order to build the project. 
 
     git clone git@github.com:jamesnetherton/homehub-metrics-exporter.git
     make build
