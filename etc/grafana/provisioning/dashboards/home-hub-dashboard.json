@@ -23,18 +23,13 @@
         "defaults": {
           "custom": {},
           "mappings": [],
-          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
                 "color": "green",
-                "value": 60
+                "value": null
               }
             ]
           },
@@ -163,18 +158,13 @@
               "type": 2
             }
           ],
-          "max": 25,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
                 "color": "green",
-                "value": 15
+                "value": null
               }
             ]
           },
@@ -573,12 +563,12 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "BT Home Hub Statistics",
   "uid": "dba8e3896e7a56b2325cc571fde93891",
-  "version": 14
+  "version": 15
 }
